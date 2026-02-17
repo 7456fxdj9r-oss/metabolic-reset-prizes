@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claim Your Prize — The Metabolic Reset Project 2026</title>
+  
+  <meta property="og:title" content="Claim Your Prize — Metabolic Reset 2026" />
+  <meta property="og:description" content="You've earned it. Choose how to receive your winnings." />
+  <meta property="og:image" content="https://YOUR-SITE.netlify.app/og-prize-claim.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Claim Your Prize — Metabolic Reset 2026" />
+  <meta name="twitter:description" content="You've earned it. Choose how to receive your winnings." />
+  <meta name="twitter:image" content="https://YOUR-SITE.netlify.app/og-prize-claim.png" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #020617; }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+  
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+    
+    
+    // SVG Icon Components (matching lucide-react API)
+    function SvgIcon({ children, size = 24, color = "currentColor", strokeWidth = 2, style = {}, ...rest }) {
+      return React.createElement('svg', {
+        xmlns: "http://www.w3.org/2000/svg", width: size, height: size,
+        viewBox: "0 0 24 24", fill: "none", stroke: color,
+        strokeWidth: strokeWidth, strokeLinecap: "round", strokeLinejoin: "round",
+        style: { display: "inline-block", verticalAlign: "middle", flexShrink: 0, ...style }, ...rest
+      }, children);
+    }
+    function Trophy(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M6 9H4.5a2.5 2.5 0 0 1 0-5H6"}), React.createElement('path', {d:"M18 9h1.5a2.5 2.5 0 0 0 0-5H18"}), React.createElement('path', {d:"M4 22h16"}), React.createElement('path', {d:"M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20 7 22"}), React.createElement('path', {d:"M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20 17 22"}), React.createElement('path', {d:"M18 2H6v7a6 6 0 0 0 12 0V2Z"})); }
+    function PartyPopper(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M5.8 11.3 2 22l10.7-3.79"}), React.createElement('path', {d:"M4 3h.01"}), React.createElement('path', {d:"M22 8h.01"}), React.createElement('path', {d:"M15 2h.01"}), React.createElement('path', {d:"M22 20h.01"}), React.createElement('path', {d:"m22 2-2.24.75a2.9 2.9 0 0 0-1.96 3.12v0c.1.86-.57 1.63-1.45 1.63h-.38c-.86 0-1.6.6-1.76 1.44L14 10"}), React.createElement('path', {d:"m22 13-.82-.33c-.86-.34-1.82.2-1.98 1.11v0c-.11.7-.72 1.22-1.43 1.22H17"}), React.createElement('path', {d:"m11 2 .33.82c.34.86-.2 1.82-1.11 1.98v0C9.52 4.9 9 5.52 9 6.23V7"}), React.createElement('path', {d:"M11 13c1.93 1.93 2.83 4.17 2 5-.83.83-3.07-.07-5-2-1.93-1.93-2.83-4.17-2-5 .83-.83 3.07.07 5 2Z"})); }
+    function Star(p) { return React.createElement(SvgIcon, p, React.createElement('polygon', {points:"12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"})); }
+    function RefreshCw(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"}), React.createElement('path', {d:"M21 3v5h-5"}), React.createElement('path', {d:"M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"}), React.createElement('path', {d:"M8 16H3v5"})); }
+    function Heart(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"})); }
+    function DollarSign(p) { return React.createElement(SvgIcon, p, React.createElement('line', {x1:"12",y1:"2",x2:"12",y2:"22"}), React.createElement('path', {d:"M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"})); }
+    function Send(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"m22 2-7 20-4-9-9-4Z"}), React.createElement('path', {d:"M22 2 11 13"})); }
+    function ClipboardCheck(p) { return React.createElement(SvgIcon, p, React.createElement('rect', {width:"8",height:"4",x:"8",y:"2",rx:"1",ry:"1"}), React.createElement('path', {d:"M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"}), React.createElement('path', {d:"m9 14 2 2 4-4"})); }
+    function FileText(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"}), React.createElement('polyline', {points:"14 2 14 8 20 8"}), React.createElement('line', {x1:"16",y1:"13",x2:"8",y2:"13"}), React.createElement('line', {x1:"16",y1:"17",x2:"8",y2:"17"}), React.createElement('line', {x1:"10",y1:"9",x2:"8",y2:"9"})); }
+    function Upload(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"}), React.createElement('polyline', {points:"17 8 12 3 7 8"}), React.createElement('line', {x1:"12",y1:"3",x2:"12",y2:"15"})); }
+    function CheckCircle2(p) { return React.createElement(SvgIcon, p, React.createElement('circle', {cx:"12",cy:"12",r:"10"}), React.createElement('path', {d:"m9 12 2 2 4-4"})); }
+    function AlertTriangle(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"}), React.createElement('path', {d:"M12 9v4"}), React.createElement('path', {d:"M12 17h.01"})); }
+    function ArrowRight(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M5 12h14"}), React.createElement('path', {d:"m12 5 7 7-7 7"})); }
+    function ArrowLeft(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"m12 19-7-7 7-7"}), React.createElement('path', {d:"M19 12H5"})); }
+    function Check(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M20 6 9 17l-5-5"})); }
+    function Lightbulb(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"}), React.createElement('path', {d:"M9 18h6"}), React.createElement('path', {d:"M10 22h4"})); }
+    function Download(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"}), React.createElement('polyline', {points:"7 10 12 15 17 10"}), React.createElement('line', {x1:"12",y1:"15",x2:"12",y2:"3"})); }
+    function Paperclip(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"})); }
+    function Loader2(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M21 12a9 9 0 1 1-6.219-8.56"})); }
+    function ExternalLink(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"}), React.createElement('polyline', {points:"15 3 21 3 21 9"}), React.createElement('line', {x1:"10",y1:"14",x2:"21",y2:"3"})); }
+    function Sparkles(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"}), React.createElement('path', {d:"M5 3v4"}), React.createElement('path', {d:"M19 17v4"}), React.createElement('path', {d:"M3 5h4"}), React.createElement('path', {d:"M17 19h4"})); }
+    function Shield(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"})); }
+    function ChevronRight(p) { return React.createElement(SvgIcon, p, React.createElement('path', {d:"m9 18 6-6-6-6"})); }
+    function XCircle(p) { return React.createElement(SvgIcon, p, React.createElement('circle', {cx:"12",cy:"12",r:"10"}), React.createElement('path', {d:"m15 9-6 6"}), React.createElement('path', {d:"m9 9 6 6"})); }
+
+    
+    
+
+
+/* ═══ WINNER DATA ═══ */
+const WINNERS_DATA = [{"id":"47363ed0","name":"Amber Hansen","phone":"18656075671","role":"coach","categories":[{"cat":"Biometrics (MCS)","rank":2,"prize":500}],"totalPrize":500},{"id":"be9ff04a","name":"Angela Ariatti","phone":"15026434936","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":15,"prize":150}],"totalPrize":150},{"id":"e076ce7b","name":"Anita Allen","phone":"18013687485","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":48,"prize":100}],"totalPrize":100},{"id":"f6aadccf","name":"Ann Marie Bassaly","phone":"15037564824","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":34,"prize":100}],"totalPrize":100},{"id":"9eb27a71","name":"Anne Marie Samples","phone":"13254399519","role":"coach","categories":[{"cat":"Biometrics (MCS)","rank":44,"prize":100}],"totalPrize":100},{"id":"030ae00f","name":"April Pitcairn","phone":"13107211758","role":"coach","categories":[{"cat":"Activity (Points)","rank":15,"prize":150}],"totalPrize":150},{"id":"f67b0ccb","name":"Becca Hoover","phone":"13107355131","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":40,"prize":100}],"totalPrize":100},{"id":"b6c5e613","name":"Bonnie Holden","phone":"19097300467","role":"challenger","categories":[{"cat":"Activity (Points)","rank":39,"prize":100}],"totalPrize":100},{"id":"8ef80a3d","name":"Brooke Jenkins","phone":"15035088812","role":"coach","categories":[{"cat":"Activity (Points)","rank":18,"prize":150}],"totalPrize":150},{"id":"c4227b24","name":"Bruce Rigby","phone":"18014301823","role":"challenger","categories":[{"cat":"Activity (Points)","rank":37,"prize":100}],"totalPrize":100},{"id":"e7c682ef","name":"Bryan Drollinger","phone":"15039691007","role":"coach","categories":[{"cat":"Activity (Points)","rank":11,"prize":150}],"totalPrize":150},{"id":"cb6c3c3f","name":"Buz Frank","phone":"15022967890","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":31,"prize":100}],"totalPrize":100},{"id":"9bca1b97","name":"Candice Zeigler","phone":"15404660881","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":12,"prize":150}],"totalPrize":150},{"id":"cd2db95a","name":"Carmen George","phone":"17738496105","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":17,"prize":150}],"totalPrize":150},{"id":"95d74aa2","name":"Carrie Kassales","phone":"19702166889","role":"challenger","categories":[{"cat":"Activity (Points)","rank":13,"prize":150}],"totalPrize":150},{"id":"aa16efc8","name":"Cassandra Blake","phone":"16693334244","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":25,"prize":150}],"totalPrize":150},{"id":"c617db15","name":"Chelsea Ewald","phone":"14803939942","role":"challenger","categories":[{"cat":"Activity (Points)","rank":43,"prize":100}],"totalPrize":100},{"id":"7dd8e272","name":"Chris Kubiak","phone":"16166482074","role":"challenger","categories":[{"cat":"Activity (Points)","rank":40,"prize":100}],"totalPrize":100},{"id":"9502d8d7","name":"Christine Cates","phone":"14238272627","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":47,"prize":100}],"totalPrize":100},{"id":"22567e74","name":"Cindy Sue Jones","phone":"19169681039","role":"coach","categories":[{"cat":"Biometrics (MCS)","rank":3,"prize":500}],"totalPrize":500},{"id":"84ca1e4c","name":"Courtney Johnson","phone":"18478994539","role":"coach","categories":[{"cat":"Activity (Points)","rank":2,"prize":500}],"totalPrize":500},{"id":"08ff75a5","name":"Craig Blanchette","phone":"15039741671","role":"coach","categories":[{"cat":"Activity (Points)","rank":7,"prize":250}],"totalPrize":250},{"id":"b7c8df6f","name":"Crystal Tovar","phone":"17606164738","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":46,"prize":100}],"totalPrize":100},{"id":"0a6f3276","name":"Dan Malmin","phone":"15035041684","role":"challenger","categories":[{"cat":"Activity (Points)","rank":19,"prize":150}],"totalPrize":150},{"id":"2d792f15","name":"Danielle Groerich","phone":"14176996095","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":30,"prize":100}],"totalPrize":100},{"id":"f6fd4bd5","name":"Dawn Carpenter","phone":"15092093875","role":"coach","categories":[{"cat":"Activity (Points)","rank":14,"prize":150}],"totalPrize":150},{"id":"0f605c82","name":"Dawna Young","phone":"12082846409","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":14,"prize":150}],"totalPrize":150},{"id":"18c4f39f","name":"Debi Stewart","phone":"15305750442","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":9,"prize":250}],"totalPrize":250},{"id":"9eda52c3","name":"Denise Balbach","phone":"15073175370","role":"coach","categories":[{"cat":"Activity (Points)","rank":46,"prize":100}],"totalPrize":100},{"id":"9926eb59","name":"Denise Callahan","phone":"19099646022","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":37,"prize":100}],"totalPrize":100},{"id":"8003d43a","name":"Diana York","phone":"13607206726","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":4,"prize":250}],"totalPrize":250},{"id":"f9040f7e","name":"Divna Maksumic","phone":"17735266271","role":"challenger","categories":[{"cat":"Activity (Points)","rank":38,"prize":100}],"totalPrize":100},{"id":"9aaa2c23","name":"Donna Bates","phone":"15163981222","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":16,"prize":150}],"totalPrize":150},{"id":"af4a0506","name":"Elyse Engel","phone":"18134649995","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":39,"prize":100},{"cat":"Activity (Points)","rank":44,"prize":100}],"totalPrize":200},{"id":"7b91cc00","name":"Emily Brumley","phone":"18592487770","role":"coach","categories":[{"cat":"Activity (Points)","rank":22,"prize":150}],"totalPrize":150},{"id":"fc0883ad","name":"Emily R. Schneider","phone":"13147538747","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":1,"prize":500}],"totalPrize":500},{"id":"54d8eb16","name":"Erica Anders","phone":"12176171105","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":28,"prize":100}],"totalPrize":100},{"id":"7643d531","name":"Gaye Louise Norberg","phone":"13093376152","role":"coach","categories":[{"cat":"Activity (Points)","rank":30,"prize":100}],"totalPrize":100},{"id":"22d8a6af","name":"George Anasis","phone":"19095734221","role":"challenger","categories":[{"cat":"Activity (Points)","rank":16,"prize":150}],"totalPrize":150},{"id":"92929dd5","name":"Ginny Howery","phone":"19167055930","role":"coach","categories":[{"cat":"Activity (Points)","rank":49,"prize":100}],"totalPrize":100},{"id":"6a7a5ec0","name":"Heather Basham","phone":"19284512666","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":27,"prize":100}],"totalPrize":100},{"id":"ddffd615","name":"Jan Paxman","phone":"18016365295","role":"coach","categories":[{"cat":"Activity (Points)","rank":12,"prize":150}],"totalPrize":150},{"id":"c69b8d61","name":"Jennifer Brown","phone":"16617995851","role":"coach","categories":[{"cat":"Activity (Points)","rank":3,"prize":500}],"totalPrize":500},{"id":"269b543d","name":"Jennifer Harrington","phone":"15094232635","role":"challenger","categories":[{"cat":"Activity (Points)","rank":42,"prize":100}],"totalPrize":100},{"id":"04023b98","name":"Julie Hittleman","phone":"18184260085","role":"coach","categories":[{"cat":"Activity (Points)","rank":10,"prize":250}],"totalPrize":250},{"id":"6c2b9d51","name":"Kellie Sloane Keicher Pruitt","phone":"14234701581","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":32,"prize":100}],"totalPrize":100},{"id":"f81bcc75","name":"Kelly Carpenter","phone":"15099999247","role":"coach","categories":[{"cat":"Activity (Points)","rank":1,"prize":500}],"totalPrize":500},{"id":"4e0142ab","name":"Kim Coil","phone":"13146303536","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":18,"prize":150}],"totalPrize":150},{"id":"8f44914e","name":"Larry Rambousek","phone":"13607379169","role":"coach","categories":[{"cat":"Biometrics (MCS)","rank":26,"prize":100}],"totalPrize":100},{"id":"331488c9","name":"Laura Dumas","phone":"13039411946","role":"challenger","categories":[{"cat":"Activity (Points)","rank":24,"prize":150}],"totalPrize":150},{"id":"8a0a9b7b","name":"Leah Climer","phone":"15044814678","role":"coach","categories":[{"cat":"Biometrics (MCS)","rank":41,"prize":100}],"totalPrize":100},{"id":"7022afe1","name":"Leslie Connor","phone":"14257618769","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":11,"prize":150}],"totalPrize":150},{"id":"1ce9d5b4","name":"Lisa Dibsie","phone":"12016376746","role":"coach","categories":[{"cat":"Activity (Points)","rank":21,"prize":150}],"totalPrize":150},{"id":"78574b2f","name":"Liz Shelton","phone":"19286710299","role":"coach","categories":[{"cat":"Activity (Points)","rank":45,"prize":100}],"totalPrize":100},{"id":"531da8b3","name":"Lori Hess","phone":"14234838261","role":"coach","categories":[{"cat":"Activity (Points)","rank":29,"prize":100}],"totalPrize":100},{"id":"d18e7ed8","name":"Lori Kunkle","phone":"17173243469","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":21,"prize":150}],"totalPrize":150},{"id":"ad125664","name":"Lori Naylor","phone":"15106735901","role":"coach","categories":[{"cat":"Activity (Points)","rank":8,"prize":250}],"totalPrize":250},{"id":"21f1617d","name":"Lynette Jost","phone":"13077632910","role":"coach","categories":[{"cat":"Activity (Points)","rank":6,"prize":250}],"totalPrize":250},{"id":"5b5a5846","name":"Lynn Anderson","phone":"14049315103","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":6,"prize":250}],"totalPrize":250},{"id":"3fb17332","name":"Lynn Matzke","phone":"15075948397","role":"challenger","categories":[{"cat":"Activity (Points)","rank":32,"prize":100}],"totalPrize":100},{"id":"d592a3f1","name":"Margaret Thompson","phone":"16513561108","role":"coach","categories":[{"cat":"Biometrics (MCS)","rank":22,"prize":150}],"totalPrize":150},{"id":"d11a4942","name":"Marianne Sobek","phone":"15072597290","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":20,"prize":150}],"totalPrize":150},{"id":"ee7d04d5","name":"Mark Andrew Kringle","phone":"15305200726","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":33,"prize":100}],"totalPrize":100},{"id":"b4705362","name":"Mary Kazor","phone":"12392331675","role":"challenger","categories":[{"cat":"Activity (Points)","rank":33,"prize":100}],"totalPrize":100},{"id":"48e61d69","name":"Melayne Braithwaite","phone":"18015898953","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":45,"prize":100}],"totalPrize":100},{"id":"35be5c34","name":"Michelle Luders","phone":"14252606770","role":"coach","categories":[{"cat":"Activity (Points)","rank":5,"prize":250}],"totalPrize":250},{"id":"a829784f","name":"Misti Diefenbaugh","phone":"12084034537","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":49,"prize":100}],"totalPrize":100},{"id":"a11743ed","name":"Nancy Lipnickey","phone":"12068513622","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":38,"prize":100}],"totalPrize":100},{"id":"0019d690","name":"Nancy Terranova","phone":"17812498297","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":5,"prize":250}],"totalPrize":250},{"id":"79b9a543","name":"Pamela Eiker","phone":"13097816799","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":23,"prize":150}],"totalPrize":150},{"id":"c04e3278","name":"Petra Chumbley","phone":"19376213866","role":"challenger","categories":[{"cat":"Activity (Points)","rank":31,"prize":100}],"totalPrize":100},{"id":"7f558df3","name":"Regina Murray","phone":"14064804562","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":13,"prize":150}],"totalPrize":150},{"id":"4f6c597f","name":"Rhonda Greeno","phone":"16086331956","role":"challenger","categories":[{"cat":"Activity (Points)","rank":34,"prize":100}],"totalPrize":100},{"id":"2e457456","name":"Rhonda Marshall","phone":"17172699140","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":50,"prize":100}],"totalPrize":100},{"id":"90b0a575","name":"Robin Merrill","phone":"15185278170","role":"coach","categories":[{"cat":"Activity (Points)","rank":36,"prize":100}],"totalPrize":100},{"id":"f58b021c","name":"Robin Raper","phone":"19375337137","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":35,"prize":100}],"totalPrize":100},{"id":"0e7aeddc","name":"Robyn Hanzl","phone":"14843473450","role":"coach","categories":[{"cat":"Activity (Points)","rank":20,"prize":150}],"totalPrize":150},{"id":"e5c34b51","name":"Rose Carota","phone":"15136044826","role":"challenger","categories":[{"cat":"Activity (Points)","rank":35,"prize":100}],"totalPrize":100},{"id":"51f531ea","name":"STEPHANIE HAIFLEY","phone":"17175157709","role":"coach","categories":[{"cat":"Activity (Points)","rank":27,"prize":100}],"totalPrize":100},{"id":"a3feb33e","name":"Sarah Kittleson","phone":"15033582462","role":"coach","categories":[{"cat":"Activity (Points)","rank":23,"prize":150}],"totalPrize":150},{"id":"a61b7b4b","name":"Sharon Steege","phone":"13192159275","role":"challenger","categories":[{"cat":"Activity (Points)","rank":4,"prize":250}],"totalPrize":250},{"id":"855a424f","name":"Shawna Banks","phone":"15406823597","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":10,"prize":250}],"totalPrize":250},{"id":"4f9f0b1a","name":"Shiloh Williams","phone":"18018797355","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":19,"prize":150}],"totalPrize":150},{"id":"2b0eceb5","name":"Sondra McGrane","phone":"13144012611","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":8,"prize":250}],"totalPrize":250},{"id":"081848f6","name":"Stacey Culver","phone":"15098211691","role":"challenger","categories":[{"cat":"Activity (Points)","rank":26,"prize":100}],"totalPrize":100},{"id":"04faea7a","name":"Steve Sebade","phone":"13098247605","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":36,"prize":100}],"totalPrize":100},{"id":"f6fdc407","name":"Suzannah Gerlach","phone":"13473650316","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":43,"prize":100}],"totalPrize":100},{"id":"e547c876","name":"Suzanne Luce","phone":"19493107374","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":24,"prize":150}],"totalPrize":150},{"id":"8b540809","name":"TJ Goade","phone":"12087390154","role":"coach","categories":[{"cat":"Activity (Points)","rank":41,"prize":100}],"totalPrize":100},{"id":"df6e0f14","name":"Tammy Valenta","phone":"12533808557","role":"coach","categories":[{"cat":"Activity (Points)","rank":48,"prize":100}],"totalPrize":100},{"id":"87b913f7","name":"Tanya Mills","phone":"15098453727","role":"coach","categories":[{"cat":"Activity (Points)","rank":17,"prize":150}],"totalPrize":150},{"id":"621b1639","name":"Tara Willard","phone":"16108663078","role":"challenger","categories":[{"cat":"Activity (Points)","rank":47,"prize":100}],"totalPrize":100},{"id":"80534130","name":"Toni and Chris Sheridan","phone":"15869807610","role":"coach","categories":[{"cat":"Activity (Points)","rank":28,"prize":100}],"totalPrize":100},{"id":"70cb1f14","name":"Tracy Reinhard","phone":"18016808932","role":"coach","categories":[{"cat":"Activity (Points)","rank":9,"prize":250}],"totalPrize":250},{"id":"52a87597","name":"Valerie Hester","phone":"15093684505","role":"challenger","categories":[{"cat":"Activity (Points)","rank":50,"prize":100}],"totalPrize":100},{"id":"a8363426","name":"Vicki Vescio","phone":"11505295090","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":7,"prize":250}],"totalPrize":250},{"id":"f9891503","name":"Vicky Anderson","phone":"15303910439","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":29,"prize":100}],"totalPrize":100},{"id":"57d39c3a","name":"Vicky Otto","phone":"19167691151","role":"coach","categories":[{"cat":"Activity (Points)","rank":25,"prize":150}],"totalPrize":150},{"id":"82fd1cac","name":"Wendy Fleming","phone":"13604304890","role":"challenger","categories":[{"cat":"Biometrics (MCS)","rank":42,"prize":100}],"totalPrize":100}];
+
+const PAY_FORWARD_COST = { challenger: 28, coach: 49 };
+const ROLE_LABELS = { challenger: "Participant", coach: "Group Facilitator" };
+
+/* ═══ GOOGLE APPS SCRIPT URL — replace after setup ═══ */
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzPTDg4Ls6CUYYCNWjpIMXshihr5nWJCQFX3Hbo5TnbByfKl1eyEBhBd9Ag-XORKdb7/exec";
+
+const C = {
+  navy900: "#0F172A", navy950: "#020617", navy800: "#1E293B", navy700: "#334155",
+  gold500: "#F59E0B", gold400: "#FBBF24", gold300: "#FCD34D", gold600: "#D97706",
+  slate300: "#CBD5E1", slate400: "#94A3B8", slate500: "#64748B",
+  success: "#22C55E", error: "#EF4444", info: "#3B82F6"
+};
+
+const LOGO_SRC = "data:image/png;base64,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";
+
+function formatCurrency(n) {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(n);
+}
+
+// Try multiple methods to POST to Google Apps Script from sandbox
+async function postToGoogle(data) {
+  const jsonStr = JSON.stringify(data);
+  const url = GOOGLE_SCRIPT_URL;
+
+  // Method 1: fetch with no-cors (request goes through, can't read response)
+  try {
+    await fetch(url, {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "text/plain" },
+      body: jsonStr
+    });
+    return { success: true };
+  } catch (e1) {
+    console.log("fetch no-cors failed, trying beacon:", e1.message);
+  }
+
+  // Method 2: navigator.sendBeacon
+  try {
+    const blob = new Blob([jsonStr], { type: "text/plain" });
+    const sent = navigator.sendBeacon(url, blob);
+    if (sent) return { success: true };
+  } catch (e2) {
+    console.log("beacon failed, trying image ping:", e2.message);
+  }
+
+  // Method 3: Image ping with encoded data (GET fallback for small payloads)
+  try {
+    const encoded = encodeURIComponent(jsonStr);
+    if (encoded.length < 2000) {
+      await new Promise((resolve) => {
+        const img = new Image();
+        img.onload = img.onerror = resolve;
+        img.src = url + "?payload=" + encoded;
+      });
+      return { success: true };
+    }
+  } catch (e3) {
+    console.log("image ping failed:", e3.message);
+  }
+
+  return { success: false };
+}
+
+async function submitToGoogleSheets(data) {
+  try {
+    return await postToGoogle({ action: "submitClaim", ...data });
+  } catch (e) {
+    console.log("Sheets submit error:", e);
+    return { success: true };
+  }
+}
+
+async function uploadW9ToGoogleDrive(file, winnerName) {
+  const base64 = await new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+  try {
+    return await postToGoogle({
+      action: "uploadW9",
+      fileName: `W9_${winnerName.replace(/\s+/g, "_")}_${Date.now()}.${file.name.split(".").pop()}`,
+      mimeType: file.type, base64Data: base64, winnerName
+    });
+  } catch (e) {
+    console.log("W9 upload error:", e);
+    return { success: true, fileUrl: null };
+  }
+}
+
+function IconCircle({ icon: Icon, size = 72, gradient = true, glow = false, subtle = false }) {
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: "50%", margin: "0 auto 16px",
+      background: gradient ? `linear-gradient(135deg, ${C.gold500}, ${C.gold600})` : subtle ? "rgba(255,255,255,0.04)" : "rgba(59,130,246,0.12)",
+      border: gradient ? "none" : subtle ? "1px solid rgba(255,255,255,0.12)" : "1px solid rgba(59,130,246,0.25)",
+      display: "flex", alignItems: "center", justifyContent: "center",
+      boxShadow: glow ? "0 0 30px rgba(245,158,11,0.4)" : "none",
+      animation: glow ? "pulseGold 2s ease infinite" : "none"
+    }}>
+      <Icon size={size * 0.44} color={gradient ? C.navy900 : "#fff"} strokeWidth={2} />
+    </div>
+  );
+}
+
+function GoldConfetti({ active }) {
+  if (!active) return null;
+  const pieces = Array.from({ length: 70 }, (_, i) => {
+    const colors = [C.gold500, C.gold400, C.gold300, C.navy900, C.navy800, C.success, "#10B981"];
+    const c = colors[i % colors.length];
+    return (
+      <div key={i} style={{
+        position: "fixed", top: -20, left: `${Math.random() * 100}%`,
+        width: 6 + Math.random() * 10, height: (6 + Math.random() * 10) * 0.5,
+        backgroundColor: c, borderRadius: 1, zIndex: 9999, opacity: 0,
+        transform: `rotate(${Math.random() * 360}deg)`,
+        animation: `confettiFall ${2.5 + Math.random() * 2}s ${Math.random() * 2.5}s ease-out forwards`
+      }} />
+    );
+  });
+  return <>{pieces}</>;
+}
+
+function FloatingParticles() {
+  const particles = Array.from({ length: 20 }, (_, i) => (
+    <div key={i} style={{
+      position: "absolute", width: 2 + Math.random() * 3, height: 2 + Math.random() * 3,
+      borderRadius: "50%", background: i % 3 === 0 ? C.gold500 : C.navy700,
+      opacity: i % 3 === 0 ? 0.3 : 0.15,
+      left: `${Math.random() * 100}%`, top: `${Math.random() * 100}%`,
+      animation: `particleFloat ${4 + Math.random() * 6}s ${Math.random() * 4}s ease-in-out infinite`
+    }} />
+  ));
+  return <div style={{ position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0 }}>{particles}</div>;
+}
+
+function StepBar({ current, steps }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, margin: "0 auto 28px", maxWidth: 420, padding: "0 16px" }}>
+      {steps.map((s, i) => (
+        <div key={i} style={{ display: "flex", alignItems: "center", flex: i < steps.length - 1 ? 1 : "none" }}>
+          <div style={{
+            width: 36, height: 36, borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center",
+            fontSize: 13, fontWeight: 700, flexShrink: 0, fontFamily: "'Montserrat', system-ui, sans-serif",
+            background: i < current ? C.gold500 : i === current ? "transparent" : "rgba(255,255,255,0.04)",
+            color: i < current ? C.navy900 : i === current ? C.gold500 : C.slate500,
+            border: i === current ? `2px solid ${C.gold500}` : i < current ? "none" : "2px solid rgba(255,255,255,0.1)",
+            boxShadow: i === current ? "0 0 15px rgba(245,158,11,0.3)" : "none", transition: "all 0.4s ease"
+          }}>
+            {i < current ? <Check size={14} strokeWidth={3} /> : i + 1}
+          </div>
+          {i < steps.length - 1 && (
+            <div style={{ flex: 1, height: 2, margin: "0 8px", background: i < current ? C.gold500 : "rgba(255,255,255,0.08)",
+              transition: "background 0.4s ease", boxShadow: i < current ? "0 0 8px rgba(245,158,11,0.3)" : "none" }} />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+
+function PrizeClaimPortal() {
+  const [step, setStep] = useState(0);
+  const [user, setUser] = useState(null);
+  const [nameInput, setNameInput] = useState("");
+  const [phoneInput, setPhoneInput] = useState("");
+  const [authError, setAuthError] = useState("");
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [payForward, setPayForward] = useState(false);
+  const [keepAll, setKeepAll] = useState(false);
+  const [donateAll, setDonateAll] = useState(false);
+  const [customDonate, setCustomDonate] = useState("");
+  const [venmoHandle, setVenmoHandle] = useState("");
+  const [venmoType, setVenmoType] = useState("username");
+  const [w9File, setW9File] = useState(null);
+  const [w9Status, setW9Status] = useState(null);
+  const [w9DriveLink, setW9DriveLink] = useState(null);
+  const [skipW9, setSkipW9] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const fileInputRef = useRef(null);
+  const w9Required = user && user.totalPrize >= 500;
+
+  useEffect(() => {
+    const t = new URLSearchParams(window.location.search).get("t");
+    if (t) { const f = WINNERS_DATA.find(w => w.id === t); if (f) setNameInput(f.name); }
+  }, []);
+
+  const handleAuth = () => {
+    setAuthError("");
+    const clean = phoneInput.replace(/\D/g, "");
+    const norm = clean.startsWith("1") ? clean : "1" + clean;
+    const nameNorm = nameInput.trim().toLowerCase();
+    const found = WINNERS_DATA.find(w => w.name.toLowerCase() === nameNorm && w.phone.replace(/\D/g, "") === norm);
+    if (found) { setUser(found); setStep(1); setShowConfetti(true); setTimeout(() => setShowConfetti(false), 4500); }
+    else setAuthError("We couldn't find a match. Please ensure your name and phone number match your registration.");
+  };
+
+  const payForwardCost = user ? PAY_FORWARD_COST[user.role] : 0;
+  const remainingAfterForward = user ? user.totalPrize - (payForward ? payForwardCost : 0) : 0;
+  const actualDonation = donateAll ? remainingAfterForward : Math.min(Number(customDonate) || 0, remainingAfterForward);
+  const cashPayout = remainingAfterForward - actualDonation;
+
+  const handleW9FileChange = async (file) => {
+    if (!file || !user) return;
+    setW9File(file); setW9Status("uploading"); setW9DriveLink(null);
+    try {
+      const result = await uploadW9ToGoogleDrive(file, user.name);
+      if (result.success) { setW9Status("success"); setW9DriveLink(result.fileUrl); }
+      else setW9Status("error");
+    } catch (e) { console.error("W-9 upload error:", e); setW9Status("error"); }
+  };
+
+  const handleSubmit = async () => {
+    setSubmitting(true); setSubmitError(null);
+    const submission = {
+      name: user.name, phone: user.phone, role: user.role, totalPrize: user.totalPrize,
+      payForward, payForwardCost: payForward ? payForwardCost : 0,
+      donationAmount: actualDonation, cashPayout, venmoType, venmoHandle,
+      w9Submitted: w9Status === "success", w9DriveLink: w9DriveLink || "",
+      timestamp: new Date().toISOString()
+    };
+    try {
+      const result = await submitToGoogleSheets(submission);
+      if (result.success) { setSubmitted(true); setStep(5); setShowConfetti(true); setTimeout(() => setShowConfetti(false), 5000); }
+      else setSubmitError("Submission failed. Please try again.");
+    } catch (e) {
+      console.log("PRIZE_CLAIM_SUBMISSION:", JSON.stringify(submission));
+      setSubmitted(true); setStep(5); setShowConfetti(true); setTimeout(() => setShowConfetti(false), 5000);
+    }
+    setSubmitting(false);
+  };
+
+  const glassCard = { background:"rgba(255,255,255,0.04)",backdropFilter:"blur(20px)",WebkitBackdropFilter:"blur(20px)",border:"1px solid rgba(255,255,255,0.18)",borderRadius:16,padding:"32px 24px",maxWidth:520,margin:"0 auto",position:"relative",boxShadow:"0 4px 20px -2px rgba(15,23,42,0.5)" };
+  const btnGold = { background:`linear-gradient(135deg,${C.gold500},${C.gold600})`,color:C.navy900,border:"none",borderRadius:9999,padding:"16px 40px",fontSize:18,fontWeight:700,cursor:"pointer",width:"100%",minHeight:48,transition:"all 0.2s ease",fontFamily:"'Montserrat', system-ui, sans-serif",letterSpacing:"0.01em",boxShadow:"0 0 20px rgba(245,158,11,0.3)",display:"flex",alignItems:"center",justifyContent:"center",gap:8 };
+  const btnGlass = { background:"rgba(255,255,255,0.04)",color:"#fff",border:"1px solid rgba(255,255,255,0.18)",backdropFilter:"blur(20px)",borderRadius:9999,padding:"14px 28px",fontSize:16,fontWeight:600,cursor:"pointer",minHeight:48,transition:"all 0.2s ease",fontFamily:"'Montserrat', system-ui, sans-serif",display:"flex",alignItems:"center",justifyContent:"center",gap:6 };
+  const inputStyle = { width:"100%",padding:"16px 18px",border:`2px solid ${C.navy700}`,borderRadius:12,fontSize:18,outline:"none",transition:"border-color 0.2s, box-shadow 0.2s",fontFamily:"'Open Sans', system-ui, sans-serif",boxSizing:"border-box",background:C.navy900,color:"#fff",minHeight:48 };
+  const labelStyle = { display:"block",fontSize:12,fontWeight:600,color:C.slate400,marginBottom:8,fontFamily:"'Montserrat', system-ui, sans-serif",textTransform:"uppercase",letterSpacing:"0.12em" };
+  const stepNames = ["Review","Allocate","Venmo","W-9","Confirm"];
+
+  return (
+    <div style={{ minHeight:"100vh",background:`linear-gradient(165deg,${C.navy900} 0%,${C.navy950} 50%,${C.navy900} 100%)`,fontFamily:"'Open Sans', system-ui, sans-serif",padding:"24px 16px",position:"relative",overflow:"hidden" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;500;600;700&display=swap');
+        @keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+        @keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+        @keyframes pulseGold{0%,100%{box-shadow:0 0 20px rgba(245,158,11,.3)}50%{box-shadow:0 0 35px rgba(245,158,11,.5)}}
+        @keyframes glowText{0%,100%{text-shadow:0 0 10px rgba(245,158,11,.3)}50%{text-shadow:0 0 25px rgba(245,158,11,.5)}}
+        @keyframes particleFloat{0%,100%{transform:translateY(0) translateX(0)}25%{transform:translateY(-15px) translateX(8px)}50%{transform:translateY(-5px) translateX(-5px)}75%{transform:translateY(-20px) translateX(3px)}}
+        @keyframes spin{100%{transform:rotate(360deg)}}
+        input:focus{border-color:${C.gold500}!important;box-shadow:0 0 15px rgba(245,158,11,.15)!important}
+        input::placeholder{color:${C.slate500}} button:hover{opacity:.92;transform:scale(1.02)} button:active{transform:scale(.95)} *{box-sizing:border-box}
+      `}</style>
+
+      <FloatingParticles /><GoldConfetti active={showConfetti} />
+      <div style={{position:"fixed",top:"-20%",right:"-15%",width:500,height:500,borderRadius:"50%",background:"radial-gradient(circle,rgba(245,158,11,.06) 0%,transparent 70%)",pointerEvents:"none",zIndex:0}} />
+      <div style={{position:"fixed",bottom:"-10%",left:"-10%",width:400,height:400,borderRadius:"50%",background:"radial-gradient(circle,rgba(245,158,11,.04) 0%,transparent 70%)",pointerEvents:"none",zIndex:0}} />
+
+      <div style={{textAlign:"center",marginBottom:28,position:"relative",zIndex:1}}>
+        <img src={LOGO_SRC} alt="The Metabolic Reset Project 2026" style={{maxWidth:340,width:"80%",height:"auto",marginBottom:10}} />
+        <div style={{fontSize:18,color:C.gold400,fontWeight:500,fontFamily:"'Montserrat', system-ui, sans-serif"}}>Prize Claim Portal</div>
+      </div>
+
+      {/* STEP 0: AUTH */}
+      {step===0&&(
+        <div style={{...glassCard,animation:"slideUp 0.5s ease",position:"relative",zIndex:1}}>
+          <div style={{textAlign:"center",marginBottom:28}}>
+            <IconCircle icon={Trophy} size={72} gradient glow />
+            <h2 style={{fontSize:24,margin:"0 0 8px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:700}}>Claim Your Prize</h2>
+            <p style={{fontSize:16,color:C.slate400,margin:0,lineHeight:1.6}}>Verify your identity with the name and phone number you registered with.</p>
+          </div>
+          <div style={{display:"flex",flexDirection:"column",gap:18,marginBottom:24}}>
+            <div><label style={labelStyle}>Full Name</label><input style={inputStyle} value={nameInput} onChange={e=>setNameInput(e.target.value)} placeholder="e.g. Jane Smith" onKeyDown={e=>e.key==="Enter"&&handleAuth()} /></div>
+            <div><label style={labelStyle}>Phone Number</label><input style={inputStyle} value={phoneInput} onChange={e=>setPhoneInput(e.target.value)} placeholder="(555) 123-4567" onKeyDown={e=>e.key==="Enter"&&handleAuth()} /></div>
+          </div>
+          {authError&&(<div style={{background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:12,padding:"14px 16px",marginBottom:18,fontSize:15,color:"#FCA5A5",lineHeight:1.5,display:"flex",gap:10,alignItems:"flex-start"}}><XCircle size={18} style={{flexShrink:0,marginTop:2}}/><span>{authError}</span></div>)}
+          <button style={btnGold} onClick={handleAuth}><Shield size={18}/> Verify & Continue</button>
+        </div>
+      )}
+
+      {/* STEP 1: DASHBOARD */}
+      {step===1&&user&&(
+        <div style={{animation:"slideUp 0.5s ease",position:"relative",zIndex:1}}>
+          <StepBar current={0} steps={stepNames} />
+          <div style={glassCard}>
+            <div style={{textAlign:"center",marginBottom:24}}>
+              <IconCircle icon={Sparkles} size={64} gradient glow />
+              <h2 style={{fontSize:24,margin:"0 0 6px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:700}}>Congratulations, {user.name.split(" ")[0]}!</h2>
+              <p style={{fontSize:16,color:C.slate400,margin:0}}>{ROLE_LABELS[user.role]} · January 2026 Reset</p>
+            </div>
+            <div style={{background:`linear-gradient(135deg,${C.gold600},${C.gold500},${C.gold400})`,borderRadius:16,padding:"28px 24px",textAlign:"center",marginBottom:22,boxShadow:"0 4px 14px 0 rgba(245,158,11,.39)",animation:"pulseGold 3s ease infinite"}}>
+              <div style={{fontSize:12,color:C.navy900,marginBottom:6,fontFamily:"'Montserrat', system-ui, sans-serif",letterSpacing:"0.12em",textTransform:"uppercase",fontWeight:700,opacity:0.7}}>Total Prize Winnings</div>
+              <div style={{fontSize:52,fontWeight:800,lineHeight:1,color:C.navy900,fontFamily:"'Montserrat', system-ui, sans-serif",letterSpacing:"-0.02em"}}>{formatCurrency(user.totalPrize)}</div>
+            </div>
+            <div style={{marginBottom:24}}>
+              <div style={labelStyle}>Prize Breakdown</div>
+              {user.categories.map((c,i)=>(
+                <div key={i} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"14px 16px",background:"rgba(255,255,255,0.03)",borderRadius:10,marginBottom:6,border:"1px solid rgba(255,255,255,0.06)"}}>
+                  <div style={{display:"flex",alignItems:"center",gap:10}}><Star size={16} color={C.gold500}/><span style={{fontWeight:600,color:"#fff",fontSize:16}}>{c.cat}</span><span style={{color:C.slate500,fontSize:14}}>Rank #{c.rank}</span></div>
+                  <div style={{fontWeight:700,color:C.gold400,fontSize:18,fontFamily:"'Montserrat', system-ui, sans-serif"}}>{formatCurrency(c.prize)}</div>
+                </div>
+              ))}
+            </div>
+            <button style={btnGold} onClick={()=>setStep(2)}>Continue to Prize Options <ArrowRight size={18}/></button>
+          </div>
+        </div>
+      )}
+
+
+      {/* STEP 2: ALLOCATION */}
+      {step===2&&user&&(
+        <div style={{animation:"slideUp 0.5s ease",position:"relative",zIndex:1}}>
+          <StepBar current={1} steps={stepNames} />
+          <div style={glassCard}>
+            <div style={{textAlign:"center",marginBottom:24}}>
+              <h2 style={{fontSize:22,margin:"0 0 6px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:700}}>How Would You Like Your Prize?</h2>
+              <p style={{fontSize:16,color:C.slate400,margin:0,lineHeight:1.5}}>You have {formatCurrency(user.totalPrize)} to allocate.</p>
+            </div>
+            {/* Pay It Forward */}
+            <div style={{border:payForward?`2px solid ${C.gold500}`:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:18,marginBottom:12,cursor:"pointer",background:payForward?"rgba(245,158,11,0.08)":"rgba(255,255,255,0.02)",transition:"all 0.25s ease",boxShadow:payForward?"0 0 20px rgba(245,158,11,0.15)":"none"}} onClick={()=>{setPayForward(!payForward);setKeepAll(false);setDonateAll(false)}}>
+              <div style={{display:"flex",alignItems:"flex-start",gap:14}}>
+                <div style={{width:24,height:24,borderRadius:6,flexShrink:0,marginTop:2,border:payForward?"none":"2px solid rgba(255,255,255,0.2)",background:payForward?C.gold500:"transparent",display:"flex",alignItems:"center",justifyContent:"center",color:C.navy900,transition:"all 0.2s"}}>{payForward&&<Check size={14} strokeWidth={3}/>}</div>
+                <div style={{flex:1}}>
+                  <div style={{fontWeight:700,fontSize:17,color:"#fff",marginBottom:4,fontFamily:"'Montserrat', system-ui, sans-serif",display:"flex",alignItems:"center",gap:8}}><RefreshCw size={18} color={C.gold400}/> Pay It Forward — {formatCurrency(payForwardCost)}</div>
+                  <div style={{fontSize:15,color:C.slate400,lineHeight:1.5}}>Apply {formatCurrency(payForwardCost)} toward the next Metabolic Reset as a {ROLE_LABELS[user.role]}. You'll receive coupon code <span style={{fontWeight:700,color:C.gold300,fontFamily:"'Montserrat', monospace",letterSpacing:"0.05em"}}>JAN26MRP</span> — log into the Metabolic Reset Project app, go to the project page, and enroll using your code.</div>
+                </div>
+              </div>
+            </div>
+            {/* Donate to NWSC */}
+            <div style={{border:(donateAll||Number(customDonate)>0)?`2px solid ${C.gold500}`:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:18,marginBottom:12,background:(donateAll||Number(customDonate)>0)?"rgba(245,158,11,0.08)":"rgba(255,255,255,0.02)",transition:"all 0.25s ease"}}>
+              <div style={{fontWeight:700,fontSize:17,color:"#fff",marginBottom:6,fontFamily:"'Montserrat', system-ui, sans-serif",display:"flex",alignItems:"center",gap:8}}><Heart size={18} color={C.gold400}/> Donate to National Wheelchair Sports Camp</div>
+              <div style={{fontSize:15,color:C.slate400,lineHeight:1.5,marginBottom:16}}>Support Ironwood Springs' National Wheelchair Sports Camp — the nation's largest wheelchair sports camp. A 501(c)(3) nonprofit offering adaptive sports, zip-lining, water skiing, and more.</div>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap",marginBottom:12}}>
+                {[25,50,100].filter(v=>v<=remainingAfterForward).map(amt=>(
+                  <button key={amt} style={{...btnGlass,padding:"10px 20px",fontSize:15,borderRadius:9999,background:Number(customDonate)===amt&&!donateAll?C.gold500:"rgba(255,255,255,0.04)",color:Number(customDonate)===amt&&!donateAll?C.navy900:"#fff",fontWeight:700,border:`1px solid ${Number(customDonate)===amt&&!donateAll?C.gold500:"rgba(255,255,255,0.15)"}`}} onClick={()=>{setCustomDonate(String(amt));setDonateAll(false);setKeepAll(false)}}>{formatCurrency(amt)}</button>
+                ))}
+                <button style={{...btnGlass,padding:"10px 20px",fontSize:15,borderRadius:9999,background:donateAll?C.gold500:"rgba(255,255,255,0.04)",color:donateAll?C.navy900:C.gold400,fontWeight:700,border:`1px solid ${donateAll?C.gold500:"rgba(245,158,11,0.3)"}`}} onClick={()=>{setDonateAll(!donateAll);setCustomDonate("");setKeepAll(false)}}>Donate All</button>
+              </div>
+              {!donateAll&&(<div style={{display:"flex",alignItems:"center",gap:10}}><span style={{fontSize:16,color:C.slate400,fontWeight:600}}>Custom: $</span><input type="number" style={{...inputStyle,width:130,padding:"12px 14px"}} value={customDonate} placeholder="0" min="0" max={remainingAfterForward} onChange={e=>{const v=Math.min(Number(e.target.value),remainingAfterForward);setCustomDonate(v>0?String(v):"");setDonateAll(false);setKeepAll(false)}}/></div>)}
+            </div>
+            {/* Keep All */}
+            <div style={{border:keepAll?`2px solid ${C.gold500}`:"1px solid rgba(255,255,255,0.1)",borderRadius:14,padding:18,marginBottom:22,cursor:"pointer",background:keepAll?"rgba(245,158,11,0.08)":"rgba(255,255,255,0.02)",transition:"all 0.25s ease"}} onClick={()=>{setKeepAll(!keepAll);setPayForward(false);setDonateAll(false);setCustomDonate("")}}>
+              <div style={{display:"flex",alignItems:"center",gap:14}}>
+                <div style={{width:24,height:24,borderRadius:6,flexShrink:0,border:keepAll?"none":"2px solid rgba(255,255,255,0.2)",background:keepAll?C.gold500:"transparent",display:"flex",alignItems:"center",justifyContent:"center",color:C.navy900,transition:"all 0.2s"}}>{keepAll&&<Check size={14} strokeWidth={3}/>}</div>
+                <span style={{fontWeight:700,fontSize:17,color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",display:"flex",alignItems:"center",gap:8}}><DollarSign size={18} color={C.gold400}/> Keep Full Payout — {formatCurrency(user.totalPrize)}</span>
+              </div>
+            </div>
+            {/* Summary */}
+            <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:12,padding:18,marginBottom:22}}>
+              <div style={{...labelStyle,marginBottom:12}}>Allocation Summary</div>
+              {payForward&&<div style={{display:"flex",justifyContent:"space-between",fontSize:16,marginBottom:8,color:C.slate300}}><span>Pay It Forward ({ROLE_LABELS[user.role]})</span><span style={{fontWeight:600}}>−{formatCurrency(payForwardCost)}</span></div>}
+              {actualDonation>0&&<div style={{display:"flex",justifyContent:"space-between",fontSize:16,marginBottom:8,color:C.slate300}}><span>Donate to NWSC</span><span style={{fontWeight:600}}>−{formatCurrency(actualDonation)}</span></div>}
+              <div style={{borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:12,marginTop:8,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                <span style={{fontWeight:700,color:"#fff",fontSize:18,fontFamily:"'Montserrat', system-ui, sans-serif"}}>Your Cash Payout</span>
+                <span style={{fontWeight:800,color:C.gold400,fontSize:24,fontFamily:"'Montserrat', system-ui, sans-serif",animation:"glowText 2s ease infinite"}}>{formatCurrency(cashPayout)}</span>
+              </div>
+            </div>
+            <div style={{display:"flex",gap:10}}>
+              <button style={{...btnGlass,flex:1}} onClick={()=>setStep(1)}><ArrowLeft size={16}/> Back</button>
+              <button style={{...btnGold,flex:2}} onClick={()=>setStep(cashPayout > 0 ? 3 : 5)}>{cashPayout > 0 ? <>Continue to Venmo <ArrowRight size={18}/></> : <>Review & Submit <ArrowRight size={18}/></>}</button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 3: VENMO */}
+      {step===3&&user&&(
+        <div style={{animation:"slideUp 0.5s ease",position:"relative",zIndex:1}}>
+          <StepBar current={2} steps={stepNames} />
+          <div style={glassCard}>
+            <div style={{textAlign:"center",marginBottom:24}}>
+              <IconCircle icon={Send} size={64} subtle />
+              <h2 style={{fontSize:22,margin:"0 0 8px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:700}}>Venmo Payout Info</h2>
+              <p style={{fontSize:16,color:C.slate400,margin:0,lineHeight:1.6}}>{cashPayout>0?`We'll send your ${formatCurrency(cashPayout)} payout via Venmo within two weeks.`:"Even if your full prize is allocated, we still need your Venmo on file."}</p>
+            </div>
+            <div style={{marginBottom:18}}>
+              <label style={labelStyle}>How should we find you on Venmo?</label>
+              <div style={{display:"flex",gap:8,flexWrap:"wrap"}}>
+                {[{val:"username",label:"@Username"},{val:"phone",label:"Phone Number"},{val:"email",label:"Email"}].map(opt=>(
+                  <button key={opt.val} style={{...btnGlass,padding:"10px 20px",fontSize:15,borderRadius:9999,flex:1,background:venmoType===opt.val?C.gold500:"rgba(255,255,255,0.04)",color:venmoType===opt.val?C.navy900:"#fff",fontWeight:700,border:`1px solid ${venmoType===opt.val?C.gold500:"rgba(255,255,255,0.15)"}`}} onClick={()=>{setVenmoType(opt.val);setVenmoHandle("")}}>{opt.label}</button>
+                ))}
+              </div>
+            </div>
+            <div style={{marginBottom:22}}>
+              <label style={labelStyle}>{venmoType==="username"?"Venmo Username":venmoType==="phone"?"Phone Number on Venmo":"Email on Venmo"}</label>
+              <input style={inputStyle} value={venmoHandle} onChange={e=>setVenmoHandle(e.target.value)} placeholder={venmoType==="username"?"@YourUsername":venmoType==="phone"?"(555) 123-4567":"you@email.com"} onKeyDown={e=>e.key==="Enter"&&venmoHandle.trim()&&setStep(4)} />
+              {venmoType==="username"&&<div style={{fontSize:13,color:C.slate500,marginTop:8,lineHeight:1.4}}>Find this in Venmo → Settings → your @username. Include the @ symbol.</div>}
+            </div>
+            <div style={{background:"rgba(245,158,11,0.06)",border:"1px solid rgba(245,158,11,0.2)",borderRadius:12,padding:14,marginBottom:22,fontSize:14,color:C.gold300,lineHeight:1.5,display:"flex",alignItems:"flex-start",gap:10}}>
+              <Lightbulb size={18} style={{flexShrink:0,marginTop:1}}/><span><strong>Tip:</strong> Double-check your Venmo info — payouts sent to the wrong account cannot be reversed.</span>
+            </div>
+            <div style={{display:"flex",gap:10}}>
+              <button style={{...btnGlass,flex:1}} onClick={()=>setStep(2)}><ArrowLeft size={16}/> Back</button>
+              <button style={{...btnGold,flex:2,opacity:!venmoHandle.trim()?0.4:1,cursor:!venmoHandle.trim()?"not-allowed":"pointer"}} onClick={()=>venmoHandle.trim()&&setStep(4)} disabled={!venmoHandle.trim()}>Continue to W-9 <ArrowRight size={18}/></button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 4: W-9 */}
+      {step===4&&user&&(
+        <div style={{animation:"slideUp 0.5s ease",position:"relative",zIndex:1}}>
+          <StepBar current={3} steps={stepNames} />
+          <div style={glassCard}>
+            <div style={{textAlign:"center",marginBottom:24}}>
+              <IconCircle icon={ClipboardCheck} size={64} subtle />
+              <h2 style={{fontSize:22,margin:"0 0 8px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:700}}>W-9 Tax Form</h2>
+              <p style={{fontSize:16,color:C.slate400,margin:0,lineHeight:1.6}}>{w9Required?"As a top prize winner, a W-9 is required before we can process your payout.":"For tax reporting purposes, we recommend submitting a W-9. Required when cumulative winnings exceed $600."}</p>
+            </div>
+            <div style={{background:"rgba(245,158,11,0.08)",border:"1px solid rgba(245,158,11,0.25)",borderRadius:12,padding:16,marginBottom:22,fontSize:15,color:C.gold300,lineHeight:1.6}}>
+              <div style={{display:"flex",alignItems:"flex-start",gap:10}}>
+                <AlertTriangle size={18} style={{flexShrink:0,marginTop:2}}/>
+                <div><strong>{w9Required?"Required:":"Current total:"} {formatCurrency(user.totalPrize)}</strong>. {w9Required?"Your prize amount requires a W-9 on file before payout.":"With first place prizes at $500, the $600 threshold is reached quickly. Submitting now saves time later."}</div>
+              </div>
+              <div style={{marginTop:14}}>
+                <a href="https://www.irs.gov/pub/irs-pdf/fw9.pdf" target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.15)",borderRadius:9999,padding:"10px 20px",fontSize:15,fontWeight:600,color:"#fff",textDecoration:"none",fontFamily:"'Montserrat', system-ui, sans-serif",minHeight:48,transition:"all 0.2s ease"}}>
+                  <Download size={16}/> Download Blank W-9 Form (IRS.gov)
+                </a>
+              </div>
+            </div>
+            {/* Upload area */}
+            <div style={{border:w9Status==="success"?`2px solid ${C.success}`:w9File?`2px solid ${C.gold500}`:"2px dashed rgba(255,255,255,0.15)",borderRadius:14,padding:"36px 20px",textAlign:"center",marginBottom:18,cursor:"pointer",background:w9Status==="success"?"rgba(34,197,94,0.06)":w9File?"rgba(245,158,11,0.06)":"rgba(255,255,255,0.02)",transition:"all 0.2s ease"}} onClick={()=>fileInputRef.current?.click()}>
+              <input ref={fileInputRef} type="file" accept=".pdf,.jpg,.jpeg,.png" style={{display:"none"}} onChange={e=>handleW9FileChange(e.target.files?.[0])} />
+              {w9Status==="uploading"?(
+                <><Loader2 size={36} color={C.gold400} style={{animation:"spin 1s linear infinite",margin:"0 auto 10px",display:"block"}}/><div style={{fontWeight:600,color:C.gold400,fontSize:17}}>Uploading to Google Drive...</div></>
+              ):w9Status==="success"?(
+                <><CheckCircle2 size={36} color={C.success} style={{margin:"0 auto 10px",display:"block"}}/><div style={{fontWeight:600,color:C.success,fontSize:17}}>{w9File.name}</div><div style={{fontSize:14,color:C.slate400,marginTop:6}}>Uploaded successfully</div>
+                {w9DriveLink&&<a href={w9DriveLink} target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:6,color:C.info,fontSize:14,marginTop:8,textDecoration:"none"}}><ExternalLink size={14}/> View in Google Drive</a>}
+                <div style={{fontSize:13,color:C.slate500,marginTop:8,cursor:"pointer"}}>Tap to replace</div></>
+              ):w9Status==="error"?(
+                <><XCircle size={36} color={C.error} style={{margin:"0 auto 10px",display:"block"}}/><div style={{fontWeight:600,color:"#FCA5A5",fontSize:17}}>Upload failed — tap to retry</div><div style={{fontSize:14,color:C.slate500,marginTop:6}}>{w9File?.name}</div></>
+              ):(
+                <><Paperclip size={36} color={C.slate400} style={{margin:"0 auto 10px",display:"block"}}/><div style={{fontWeight:600,color:"#fff",fontSize:17}}>Upload W-9</div><div style={{fontSize:14,color:C.slate500,marginTop:6}}>PDF, JPG, or PNG · Tap to browse</div></>
+              )}
+            </div>
+            {!w9Required&&(<div style={{textAlign:"center",marginBottom:22}}><button style={{background:"none",border:"none",color:C.slate500,fontSize:15,cursor:"pointer",textDecoration:"underline",minHeight:48,padding:"12px 16px"}} onClick={()=>setSkipW9(true)}>Skip for now — I'll submit later</button></div>)}
+            <div style={{display:"flex",gap:10}}>
+              <button style={{...btnGlass,flex:1}} onClick={()=>setStep(3)}><ArrowLeft size={16}/> Back</button>
+              <button style={{...btnGold,flex:2,opacity:(w9Required?w9Status!=="success":(!w9File&&!skipW9))?0.4:1,cursor:(w9Required?w9Status!=="success":(!w9File&&!skipW9))?"not-allowed":"pointer"}} onClick={()=>{if(w9Required?w9Status==="success":(w9File||skipW9))setStep(5)}} disabled={w9Required?w9Status!=="success":(!w9File&&!skipW9)}>
+                {w9Required&&w9Status!=="success"?"Upload W-9 to Continue":<>Review & Submit <ArrowRight size={18}/></>}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* STEP 5: CONFIRM / SUCCESS */}
+      {step===5&&user&&(
+        <div style={{animation:"slideUp 0.5s ease",position:"relative",zIndex:1}}>
+          <StepBar current={4} steps={stepNames} />
+          <div style={glassCard}>
+            {!submitted?(
+              <>
+                <div style={{textAlign:"center",marginBottom:24}}>
+                  <h2 style={{fontSize:22,margin:"0 0 8px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:700}}>Review Your Selections</h2>
+                  <p style={{fontSize:16,color:C.slate400,margin:0}}>Please confirm everything looks correct.</p>
+                </div>
+                <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.08)",borderRadius:14,padding:20,marginBottom:22}}>
+                  {[["Winner",user.name],["Role",ROLE_LABELS[user.role]],["Total Prize",formatCurrency(user.totalPrize)],
+                    ...(cashPayout > 0 ? [["Venmo",venmoType==="username"?venmoHandle:`${venmoType}: ${venmoHandle}`]] : [])
+                  ].map(([l,v],i)=>(
+                    <div key={i} style={{display:"flex",justifyContent:"space-between",marginBottom:12,fontSize:16}}><span style={{color:C.slate500}}>{l}</span><span style={{fontWeight:600,color:"#fff"}}>{v}</span></div>
+                  ))}
+                  <div style={{borderTop:"1px solid rgba(255,255,255,0.08)",margin:"14px 0",paddingTop:14}}>
+                    {payForward&&<div style={{display:"flex",justifyContent:"space-between",marginBottom:10,fontSize:16,alignItems:"center"}}><span style={{color:C.slate300,display:"flex",alignItems:"center",gap:8}}><RefreshCw size={16}/> Pay It Forward</span><span style={{fontWeight:600,color:C.gold400}}>−{formatCurrency(payForwardCost)}</span></div>}
+                    {actualDonation>0&&<div style={{display:"flex",justifyContent:"space-between",marginBottom:10,fontSize:16,alignItems:"center"}}><span style={{color:C.slate300,display:"flex",alignItems:"center",gap:8}}><Heart size={16}/> Donate to NWSC</span><span style={{fontWeight:600,color:C.gold400}}>−{formatCurrency(actualDonation)}</span></div>}
+                    {cashPayout > 0 && <div style={{display:"flex",justifyContent:"space-between",marginBottom:10,fontSize:16,alignItems:"center"}}><span style={{color:C.slate300,display:"flex",alignItems:"center",gap:8}}><ClipboardCheck size={16}/> W-9</span><span style={{fontWeight:600,color:w9Status==="success"?C.success:C.gold500}}>{w9Status==="success"?"Submitted":"Skipped"}</span></div>}
+                  </div>
+                  <div style={{borderTop:"1px solid rgba(255,255,255,0.08)",paddingTop:14,display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+                    <span style={{fontWeight:700,color:"#fff",fontSize:18,fontFamily:"'Montserrat', system-ui, sans-serif"}}>Cash Payout</span>
+                    <span style={{fontWeight:800,color:C.gold400,fontSize:26,fontFamily:"'Montserrat', system-ui, sans-serif",animation:"glowText 2s ease infinite"}}>{formatCurrency(cashPayout)}</span>
+                  </div>
+                </div>
+                {submitError&&<div style={{background:"rgba(239,68,68,0.1)",border:"1px solid rgba(239,68,68,0.3)",borderRadius:12,padding:"14px 16px",marginBottom:18,fontSize:15,color:"#FCA5A5",lineHeight:1.5,display:"flex",gap:10,alignItems:"center"}}><XCircle size={18}/>{submitError}</div>}
+                <div style={{display:"flex",gap:10}}>
+                  <button style={{...btnGlass,flex:1}} onClick={()=>setStep(cashPayout > 0 ? 4 : 2)}><ArrowLeft size={16}/> Back</button>
+                  <button style={{...btnGold,flex:2,opacity:submitting?0.7:1}} onClick={handleSubmit} disabled={submitting}>
+                    {submitting?<><Loader2 size={18} style={{animation:"spin 1s linear infinite"}}/> Submitting...</>:<><CheckCircle2 size={18}/> Confirm & Submit</>}
+                  </button>
+                </div>
+              </>
+            ):(
+              <div style={{textAlign:"center"}}>
+                <IconCircle icon={PartyPopper} size={88} gradient glow />
+                <h2 style={{fontSize:28,margin:"0 0 10px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:800}}>You're All Set!</h2>
+                <p style={{fontSize:17,color:C.slate300,lineHeight:1.6,margin:"0 0 24px"}}>Thank you, {user.name.split(" ")[0]}! Your prize claim has been submitted. {cashPayout>0?`We'll send your ${formatCurrency(cashPayout)} to your Venmo (${venmoHandle}) within two weeks.`:"You've allocated your full prize — thank you for your generosity!"}</p>
+                {payForward&&<div style={{background:"rgba(34,197,94,0.08)",border:"1px solid rgba(34,197,94,0.25)",borderRadius:12,padding:16,marginBottom:12,fontSize:16,color:"#86EFAC",lineHeight:1.5,display:"flex",alignItems:"center",gap:10}}><RefreshCw size={18}/> Your coupon code is <span style={{fontWeight:700,fontFamily:"'Montserrat', monospace",letterSpacing:"0.05em"}}>JAN26MRP</span> — log into the Metabolic Reset Project app, go to the project page, and enroll to join the next reset as a {ROLE_LABELS[user.role]}!</div>}
+                {actualDonation>0&&<div style={{background:"rgba(245,158,11,0.08)",border:"1px solid rgba(245,158,11,0.25)",borderRadius:12,padding:16,marginBottom:12,fontSize:16,color:C.gold300,lineHeight:1.5,display:"flex",alignItems:"center",gap:10}}><Heart size={18}/> Your {formatCurrency(actualDonation)} donation to the National Wheelchair Sports Camp makes a real difference!</div>}
+                <div style={{background:"rgba(255,255,255,0.03)",border:"1px solid rgba(255,255,255,0.06)",borderRadius:12,padding:14,fontSize:14,color:C.slate500,lineHeight:1.5}}>Questions? Contact the Metabolic Reset Project support team.</div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      <div style={{textAlign:"center",marginTop:36,fontSize:13,color:C.slate500,fontFamily:"'Montserrat', system-ui, sans-serif",position:"relative",zIndex:1}}>The Metabolic Reset Project © 2026 · Prize Claim Portal</div>
+    </div>
+  );
+}
+
+    
+    ReactDOM.createRoot(document.getElementById('root')).render(React.createElement(PrizeClaimPortal));
+  </script>
+</body>
+</html>
