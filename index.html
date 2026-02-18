@@ -257,7 +257,7 @@ function PrizeClaimPortal() {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState(null);
   const fileInputRef = useRef(null);
-  const w9Required = user && user.totalPrize >= 500;
+  const w9Required = user && cashPayout > 250;
 
   useEffect(() => {
     const t = new URLSearchParams(window.location.search).get("t");
@@ -483,12 +483,12 @@ function PrizeClaimPortal() {
             <div style={{textAlign:"center",marginBottom:24}}>
               <IconCircle icon={ClipboardCheck} size={64} subtle />
               <h2 style={{fontSize:22,margin:"0 0 8px",color:"#fff",fontFamily:"'Montserrat', system-ui, sans-serif",fontWeight:700}}>W-9 Tax Form</h2>
-              <p style={{fontSize:16,color:C.slate400,margin:0,lineHeight:1.6}}>{w9Required?"As a top prize winner, a W-9 is required before we can process your payout.":"For tax reporting purposes, we recommend submitting a W-9. Required when cumulative winnings exceed $600."}</p>
+              <p style={{fontSize:16,color:C.slate400,margin:0,lineHeight:1.6}}>{w9Required?"Your cash payout exceeds $250, so a W-9 is required before we can process your payment.":"For tax reporting purposes, we recommend submitting a W-9. Required when cumulative winnings exceed $600."}</p>
             </div>
             <div style={{background:"rgba(245,158,11,0.08)",border:"1px solid rgba(245,158,11,0.25)",borderRadius:12,padding:16,marginBottom:22,fontSize:15,color:C.gold300,lineHeight:1.6}}>
               <div style={{display:"flex",alignItems:"flex-start",gap:10}}>
                 <AlertTriangle size={18} style={{flexShrink:0,marginTop:2}}/>
-                <div><strong>{w9Required?"Required:":"Current total:"} {formatCurrency(user.totalPrize)}</strong>. {w9Required?"Your prize amount requires a W-9 on file before payout.":"With first place prizes at $500, the $600 threshold is reached quickly. Submitting now saves time later."}</div>
+                <div><strong>{w9Required?"Required:":"Current total:"} {formatCurrency(cashPayout)}</strong>. {w9Required?"Your cash payout exceeds $250 and requires a W-9 on file before payment.":"With first place prizes at $500, the $600 threshold is reached quickly. Submitting now saves time later."}</div>
               </div>
               <div style={{marginTop:14}}>
                 <a href="https://www.irs.gov/pub/irs-pdf/fw9.pdf" target="_blank" rel="noopener noreferrer" style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(255,255,255,0.06)",border:"1px solid rgba(255,255,255,0.15)",borderRadius:9999,padding:"10px 20px",fontSize:15,fontWeight:600,color:"#fff",textDecoration:"none",fontFamily:"'Montserrat', system-ui, sans-serif",minHeight:48,transition:"all 0.2s ease"}}>
